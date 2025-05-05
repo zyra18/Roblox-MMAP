@@ -15,9 +15,9 @@ namespace Offsets
 	static constexpr auto set_insert = 0xcea020;
 
 	constexpr uint8_t kPageShift = 0xc;
-	constexpr uint64_t kPageHash = 0x5f9213b9;
+	constexpr uint64_t kPageHash = 0x90dd36fed8ea4ff4;
 	constexpr uint64_t kPageMask = 0xFFFFFFFF;
-	constexpr uint16_t SCF_INSERTED_JMP = 0x90dd36fed8ea4ff4;
+	constexpr uint16_t SCF_INSERTED_JMP =  0x04EB;
 	
 	constexpr uint64_t Offset_InsertSet = set_insert;  
 	constexpr uint64_t Offset_WhitelistedPages = map;
