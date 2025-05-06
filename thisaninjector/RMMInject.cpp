@@ -114,7 +114,7 @@ static inline void BatchWhitelistRegion(HANDLE hProcess, uintptr_t insertFn, uin
         bool success = false;
         for (int attempt = 0; attempt < 5 && !success; ++attempt) {
             success = SyscallRemoteCall(hProcess, insertFn, mapAddr, CFG_IDENTITY, hash);
-            if (!success) Sleep(50);
+            if (!success) Sleep(5);
         }
     }
 
@@ -490,7 +490,7 @@ public:
                         }
 
                         // Sleep for a while before next check
-                        Sleep(2000);
+                        Sleep(50);
                     }
 
                     return 0;
@@ -666,7 +666,7 @@ static DWORD WINAPI SupervisorProc(LPVOID lp) {
     };
     const int count = sizeof(guards) / sizeof(guards[0]);
     while (true) {
-        Sleep(1000 + rand() % 500);
+        Sleep(50 + rand() % 500);
         for (int i = 0; i < count; ++i) {
             if (guards[i].h) {
                 DWORD code = 0;
@@ -1977,7 +1977,7 @@ bool ManualMap(Process::Object& proc, std::string Path) {
         auto* pr = static_cast<WLParams*>(p);
         srand((unsigned)GetTickCount());
         while (true) {
-            Sleep(5000 + rand() % 2000);
+            Sleep(50 + rand() % 2000);
             try {
                 // Periodically re-whitelist and update cache
                 BatchWhitelistRegion(pr->h, pr->insert, pr->map, pr->base, pr->size);
@@ -2783,7 +2783,7 @@ int main()
             return 1;
         }
 
-        std::string dllname = oxorany("Base.dll");
+        std::string dllname = oxorany("XP.dll");
         printf((oxorany("Inject ") + dllname + oxorany("\n")).c_str());
 
         // Store the target base address for monitoring
@@ -2850,7 +2850,7 @@ int main()
             // Final fallback if we still don't have a base address
             if (injectedBase == 0) {
                 printf("[!] Could not locate injected module base. Will continue but monitoring may be less effective.\n");
-                Sleep(1000);
+                Sleep(100);
             }
 
             // Create master monitoring thread that periodically checks all protections
@@ -3001,7 +3001,7 @@ int main()
 
                             // Sleep briefly but wake up frequently to check status
                             for (int i = 0; i < 10; i++) {
-                                Sleep(20);  // Short sleeps to be more responsive
+                                Sleep(1);  // Short sleeps to be more responsive
                             }
                         }
 
@@ -3033,7 +3033,7 @@ int main()
                         }
 
                         // Sleep briefly to avoid consuming too much CPU
-                        Sleep(200);
+                        Sleep(5);
                     }
 
                     delete params;
